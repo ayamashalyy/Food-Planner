@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/house"/>
+    <item
+        android:id="@+id/search"
+        android:title="Search"
+        android:icon="@drawable/search"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/fav"
+        android:title="Favorite"
+        android:icon="@drawable/favourite"/>
+    <item
+        android:id="@+id/calender"
+        android:title="Calender"
+        android:icon="@drawable/calendar"/>
+</menu>

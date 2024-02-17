@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">food_planner</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Add_to_plane">Add</string>
+    <string name="Search_by_meal">Search By Meal</string>
+    <string name="Search_by_ingredient">Search By Ingredient</string>
+    <string name="search_by_area">Search By Area\n</string>
+    <string name="search_by_category">Search By Category</string>
+    <string name="Saturday">Saturday</string>
+    <string name="Sunday">Sunday</string>
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Friday">Friday\n\n</string>
+    <string name="search">Search</string>
+    <string name="default_web_client_id">811045087439-i8nkhv3f606hbn6ed4pau60qkckpc67i.apps.googleusercontent.com</string>
+</resources>

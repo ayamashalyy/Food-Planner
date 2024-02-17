@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".Common.onboardingScreen">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/screen_viewPager"
+        android:layout_width="413dp"
+        android:layout_height="656dp"
+        app:layout_constraintBottom_toTopOf="@+id/tab_indicater"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <Button
+        android:id="@+id/btn_next"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="107dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Next"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tab_indicater" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_indicater"
+        android:layout_width="186dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabBackground="@drawable/indictator_selector"></com.google.android.material.tabs.TabLayout>
+
+    <Button
+        android:id="@+id/btn_get_start"
+        android:layout_width="121dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#FDD5A8"
+        android:text="Let's go"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
