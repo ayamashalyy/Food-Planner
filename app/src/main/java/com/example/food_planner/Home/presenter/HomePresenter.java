@@ -44,6 +44,8 @@ public class HomePresenter implements HomePressenterInterface, NetworkCallback {
                     }
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        homeView.showErrorMsg(e.getMessage());
+
                     }
                     @Override
                     public void onComplete() {
@@ -70,6 +72,8 @@ public class HomePresenter implements HomePressenterInterface, NetworkCallback {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        homeView.showErrorMsg(e.getMessage());
+
                     }
                     @Override
                     public void onComplete() {

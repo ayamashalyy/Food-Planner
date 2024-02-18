@@ -11,5 +11,6 @@ import java.util.List;
 public interface HomeView {
     public void showRandomMeals(Meal meal);
     public void showCategoryMeal(List<Category>categories);
+    void showErrorMsg(String e);
 
 }

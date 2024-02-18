@@ -94,26 +94,6 @@ public Observable<MealResponse> randomMealCall() {
         });
 
     }
-//    public void categoryMealCall(NetworkCallback networkCallback) {
-//        Call<MealResponse> call = mealService.getCategories();
-//        call.enqueue(new Callback<MealResponse>() {
-//            @Override
-//            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    networkCallback.onSuccessResultCategory(response.body().categories);
-//                    Log.i(TAG, "onResponseeeeeee: " + response.body());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MealResponse> call, Throwable t) {
-//                networkCallback.onFailureResult(t.getMessage());
-//
-//            }
-//        });
-//    }
-
-
 
     public void areaMealCall(NetworkCallback networkCallback) {
         Call<AreaResponse> call = mealService.getAreas();

@@ -107,6 +107,15 @@ public class homeFragment extends Fragment implements HomeView, HomeOnClickListe
     }
 
     @Override
+    public void showErrorMsg(String e) {
+//        Toast.makeText(getContext(), "There is no internet connection " + "\n" +"Please reconnect and try again", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "we can not reach the page as "+ e, Toast.LENGTH_SHORT).show();
+
+
+
+    }
+
+    @Override
     public void onAddToFavorite(Meal meal) {
 
     }
