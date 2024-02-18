@@ -5,8 +5,10 @@ import android.util.Log;
 
 import com.example.food_planner.model.AreaResponse;
 import com.example.food_planner.model.IngredientResponse;
-import com.example.food_planner.model.Meal;
 import com.example.food_planner.model.MealResponse;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +25,7 @@ public class MealsRemoteDataSourceImp {
     private MealsRemoteDataSourceImp(){
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .baseUrl(BASE_URL).build();
          mealService=retrofit.create(MealService.class);
 
@@ -35,24 +38,17 @@ public class MealsRemoteDataSourceImp {
         return client;
     }
 
-    public void randomMealCall(NetworkCallback networkCallback){
-        Call<MealResponse>call=mealService.getMeals();
-        call.enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    networkCallback.onSuccessResult(response.body().meals);
-                    Log.i(TAG, "onResponseeeeeee: " + response.body());
-                }
-            }
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable t) {
-                networkCallback.onFailureResult(t.getMessage());
+public Observable<MealResponse> randomMealCall() {
+    return mealService.getMeals()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io());
 
-            }
-        });
-
+}
+    public Observable<MealResponse> getCategories() {
+        return mealService.getCategories()
+                .subscribeOn(Schedulers.io());
     }
+
     public void mealDetails(NetworkCallback networkCallback, String id) {
 
         if (mealService == null || networkCallback == null) {
@@ -98,24 +94,25 @@ public class MealsRemoteDataSourceImp {
         });
 
     }
-    public void categoryMealCall(NetworkCallback networkCallback) {
-        Call<MealResponse> call = mealService.getCategories();
-        call.enqueue(new Callback<MealResponse>() {
-            @Override
-            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    networkCallback.onSuccessResultCategory(response.body().categories);
-                    Log.i(TAG, "onResponseeeeeee: " + response.body());
-                }
-            }
+//    public void categoryMealCall(NetworkCallback networkCallback) {
+//        Call<MealResponse> call = mealService.getCategories();
+//        call.enqueue(new Callback<MealResponse>() {
+//            @Override
+//            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    networkCallback.onSuccessResultCategory(response.body().categories);
+//                    Log.i(TAG, "onResponseeeeeee: " + response.body());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MealResponse> call, Throwable t) {
+//                networkCallback.onFailureResult(t.getMessage());
+//
+//            }
+//        });
+//    }
 
-            @Override
-            public void onFailure(Call<MealResponse> call, Throwable t) {
-                networkCallback.onFailureResult(t.getMessage());
-
-            }
-        });
-    }
 
 
     public void areaMealCall(NetworkCallback networkCallback) {

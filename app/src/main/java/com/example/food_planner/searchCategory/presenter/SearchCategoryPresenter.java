@@ -11,6 +11,12 @@ import com.example.food_planner.searchCategory.view.SearchCategoryView;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+
 public class SearchCategoryPresenter implements SearchCategoryPresenterInterface, NetworkCallback {
     MealsRemoteDataSourceImp remoteDataSourceImp;
 
@@ -21,6 +27,7 @@ public class SearchCategoryPresenter implements SearchCategoryPresenterInterface
 
     private static final String TAG = "SearchCategoryPresenter";
     SearchCategoryView searchCategoryView;
+
     @Override
     public void onSuccessResult(List<Meal> meals) {
 
@@ -59,7 +66,26 @@ public class SearchCategoryPresenter implements SearchCategoryPresenterInterface
 
     @Override
     public void getSearchCategory() {
-        remoteDataSourceImp.categoryMealCall(this);
+        Observable<MealResponse> observable = remoteDataSourceImp.getCategories();
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
 
+                    @Override
+                    public void onNext(@NonNull MealResponse categoryResponse) {
+                        searchCategoryView.showSearchCategory(categoryResponse.categories);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 }
+

@@ -65,7 +65,8 @@ public class homeFragment extends Fragment implements HomeView, HomeOnClickListe
         homePresenter.getDailyRandomMeals();
         recyclerView.setAdapter(homeAdapter);
         card=view.findViewById(R.id.cardView2);
-       // cardCategory=view.findViewById(R.id.)
+        homePresenter.getRandomMeal();
+        homePresenter.getDailyRandomMeals();
         logout.setOnClickListener(v -> {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, 0);
             SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -26,7 +26,7 @@ public class detailMealsPresenter implements detailMealPressenterInterface, Netw
 
     @Override
     public void getdetailsMeals(Meal meal) {
-        remoteDataSourceImp.randomMealCall(this);
+        remoteDataSourceImp.randomMealCall();
     }
 
     @Override

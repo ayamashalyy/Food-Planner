@@ -12,6 +12,12 @@ import com.example.food_planner.network.NetworkCallback;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+
 public class HomePresenter implements HomePressenterInterface, NetworkCallback {
     MealsRemoteDataSourceImp remoteDataSourceImp;
     private static final String TAG = "HomePresenter";
@@ -24,9 +30,52 @@ public class HomePresenter implements HomePressenterInterface, NetworkCallback {
 
     @Override
     public void getDailyRandomMeals() {
-        remoteDataSourceImp.randomMealCall(this);
-        remoteDataSourceImp.categoryMealCall(this);
+
+        Observable<MealResponse> observable =remoteDataSourceImp.getCategories();
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(@NonNull MealResponse categoryResponse) {
+                        homeView.showCategoryMeal(categoryResponse.categories);
+                    }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+        });
     }
+
+
+@Override
+    public void getRandomMeal() {
+        Observable<MealResponse> observable = remoteDataSourceImp.randomMealCall();
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(@NonNull MealResponse mealResponse) {
+                        Log.i(TAG, "onNext: "+mealResponse.meals.size());
+                        homeView.showRandomMeals(mealResponse.meals.get(0));
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+       });
+}
 
     @Override
     public void onSuccessResult(List<Meal> meals) {

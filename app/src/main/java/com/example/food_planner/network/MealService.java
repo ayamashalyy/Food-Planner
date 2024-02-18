@@ -5,6 +5,7 @@ import com.example.food_planner.model.AreaResponse;
 import com.example.food_planner.model.IngredientResponse;
 import com.example.food_planner.model.MealResponse;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -12,13 +13,13 @@ import retrofit2.http.Query;
 
 public interface MealService {
     @GET("random.php")
-    Call<MealResponse> getMeals();
+    Observable<MealResponse> getMeals();
 
     @GET("lookup.php?i")
     Call<MealResponse> getMealData(@Query("i") String id);
 
     @GET("categories.php")
-    Call<MealResponse> getCategories();
+    Observable<MealResponse> getCategories();
 
     @GET("list.php?a=list")
     Call<AreaResponse> getAreas();

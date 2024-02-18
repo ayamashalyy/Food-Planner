@@ -81,9 +81,13 @@ public class detailsMealFragment extends Fragment implements detailMealView {
         getLifecycle().addObserver(youTube);
         if (getArguments() != null) {
             meal = (Meal) getArguments().getSerializable("meal");
-            presenter.getMealID(meal.getIdMeal());
-            showdetailMeal(meal);
-
+            if(meal!=null) {
+                presenter.getMealID(meal.getIdMeal());
+                showdetailMeal(meal);
+            }else
+            {
+                Toast.makeText(getContext(), "Test", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Log.e("Trace Meal", "No Meal is Passed");
         }
