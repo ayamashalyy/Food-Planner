@@ -28,6 +28,7 @@ import com.example.food_planner.R;
 import com.example.food_planner.detailmeals.presenter.detailMealPressenterInterface;
 import com.example.food_planner.detailmeals.presenter.detailMealsPresenter;
 import com.example.food_planner.model.Meal;
+import com.example.food_planner.network.FireStore;
 import com.example.food_planner.network.MealsRemoteDataSourceImp;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -77,6 +78,8 @@ public class detailsMealFragment extends Fragment implements detailMealView {
         presenter = new detailMealsPresenter(MealsRemoteDataSourceImp.getInstance(), this);
         addToFavorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             presenterInterface.addMeal(meal);
+            FireStore.addFavouriteToFirebase(getContext(),meal);
+
         });
         getLifecycle().addObserver(youTube);
         if (getArguments() != null) {
@@ -118,6 +121,8 @@ public class detailsMealFragment extends Fragment implements detailMealView {
                 if (dayCodeMap.containsKey(day)) {
                     presenterInterface.remove(meal);
                     meal.setDAY(Integer.parseInt(dayCodeMap.get(day)));
+                    FireStore.addPlanToFirebase(getContext(),meal);
+
                     presenterInterface.addMeal(meal);
                     Toast.makeText(getContext(), "Meal added to " + day, Toast.LENGTH_SHORT).show();
                 }

@@ -40,8 +40,8 @@ public class MealsRemoteDataSourceImp {
 
 public Observable<MealResponse> randomMealCall() {
     return mealService.getMeals()
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io());
+            .subscribeOn(Schedulers.io());
+
 
 }
     public Observable<MealResponse> getCategories() {

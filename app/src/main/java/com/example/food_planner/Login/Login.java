@@ -23,6 +23,7 @@ import com.example.food_planner.Home.view.homeFragment;
 import com.example.food_planner.MainActivity;
 import com.example.food_planner.R;
 import com.example.food_planner.SignUp.Sign_up;
+import com.example.food_planner.network.FireStore;
 import com.example.food_planner.network.NetworkConnection;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -75,6 +76,16 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
+                                        FirebaseUser user = auth.getCurrentUser();
+
+                                        FireStore.getFavouriteFromFirebase(Login.this,user);
+                                        FireStore.getPlanFromFireBase(Login.this,user,"1");
+                                        FireStore.getPlanFromFireBase(Login.this,user,"2");
+                                        FireStore.getPlanFromFireBase(Login.this,user,"3");
+                                        FireStore.getPlanFromFireBase(Login.this,user,"4");
+                                        FireStore.getPlanFromFireBase(Login.this,user,"5");
+                                        FireStore.getPlanFromFireBase(Login.this,user,"6");
+                                        FireStore.getPlanFromFireBase(Login.this,user,"7");
                                         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString("name", "true");
@@ -99,7 +110,18 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 }
             }
                 else {
-                    Toast.makeText(Login.this, "There is no internet connection " + "\n" +"Please reconnect and try again", Toast.LENGTH_SHORT).show();
+
+                    String yes = "OK";
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Login.this); // Use the activity context
+                    builder.setMessage("Please reconnect and try again ");
+                    builder.setTitle("There is no internet connection");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(Html.fromHtml("<font color='#F8B66C'>" + yes + "</font>"), (DialogInterface.OnClickListener) (dialog, which) -> {
+                      dialog.cancel();
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
 
             }
@@ -181,7 +203,14 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
                         if (user != null) {
-
+                            FireStore.getFavouriteFromFirebase(Login.this,auth.getCurrentUser());
+                            FireStore.getPlanFromFireBase(Login.this,auth.getCurrentUser(),"1");
+                            FireStore.getPlanFromFireBase(Login.this,auth.getCurrentUser(),"2");
+                            FireStore.getPlanFromFireBase(Login.this,auth.getCurrentUser(),"3");
+                            FireStore.getPlanFromFireBase(Login.this,auth.getCurrentUser(),"4");
+                            FireStore.getPlanFromFireBase(Login.this,auth.getCurrentUser(),"5");
+                            FireStore.getPlanFromFireBase(Login.this,auth.getCurrentUser(),"6");
+                            FireStore.getPlanFromFireBase(Login.this,auth.getCurrentUser(),"7");
                             String displayName = user.getDisplayName();
                             String emailuser = user.getEmail();
                             Toast.makeText(this, "Welcome, " + displayName + "!", Toast.LENGTH_SHORT).show();
@@ -213,4 +242,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 break;
         }
     }
+
+
 }

@@ -20,6 +20,8 @@ import com.example.food_planner.DB.MealsLocalDataSourceImp;
 import com.example.food_planner.Favorite.presenter.favoritePresenter;
 import com.example.food_planner.R;
 import com.example.food_planner.model.Meal;
+import com.example.food_planner.network.FireStore;
+
 import java.util.ArrayList;
 
 public class favoriteAdapter  extends  RecyclerView.Adapter<favoriteAdapter.FavoriteViewHolder>{
@@ -58,7 +60,9 @@ public class favoriteAdapter  extends  RecyclerView.Adapter<favoriteAdapter.Favo
             @Override
             public void onClick(View v) {
                     presenter.remove(meal);
-                    Toast.makeText(context, "Removed from your favorite list", Toast.LENGTH_SHORT).show();
+                FireStore.removeFavouriteFromFirebase(context,meal);
+
+                Toast.makeText(context, "Removed from your favorite list", Toast.LENGTH_SHORT).show();
 
                 }
 

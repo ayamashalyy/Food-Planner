@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.food_planner.R;
 import com.example.food_planner.model.Meal;
+import com.example.food_planner.network.FireStore;
 
 import java.util.ArrayList;
 
@@ -56,6 +57,8 @@ public class CalendarAdapter extends RecyclerView.Adapter <CalendarAdapter.ViewH
             @Override
             public void onClick(View v) {
                 listener.OnClick(meal);
+                FireStore.removePlanFromFireBase(context,meal);
+
                 Toast.makeText(context, "Removed from your favorite list", Toast.LENGTH_SHORT).show();
 
             }

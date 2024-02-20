@@ -1,5 +1,7 @@
 package com.example.food_planner.Home.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.food_planner.Common.Helper;
+import com.example.food_planner.DB.MealsLocalDataSourceImp;
 import com.example.food_planner.Home.presenter.HomePresenter;
 import com.example.food_planner.Home.presenter.HomePressenterInterface;
 import com.example.food_planner.Login.Login;
@@ -42,6 +46,7 @@ public class homeFragment extends Fragment implements HomeView, HomeOnClickListe
     private static final String SHARED_PREFS = "sharedPreferences";
 
     HomeAdapter homeAdapter;
+    MealsLocalDataSourceImp localDataSourceImp;
     HomePressenterInterface homePresenter;
     Meal meal;
     ImageView imageView;
@@ -72,6 +77,8 @@ public class homeFragment extends Fragment implements HomeView, HomeOnClickListe
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("name","false");
             editor.apply();
+            localDataSourceImp = MealsLocalDataSourceImp.getInstance(getActivity().getApplicationContext());
+            localDataSourceImp.deleteAllMeals();
             Intent intent = new Intent(getActivity(), Login.class);
             startActivity(intent);
         });
@@ -83,7 +90,18 @@ public class homeFragment extends Fragment implements HomeView, HomeOnClickListe
                     showMealDetails(meal);
                 }
                 else {
-                    Toast.makeText(getContext(), "There is no internet connection " + "\n" +"Please reconnect and try again", Toast.LENGTH_SHORT).show();
+
+                    String yes = "OK";
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext()); // Use the activity context
+                    builder.setMessage("Please reconnect and try again ");
+                    builder.setTitle("There is no internet connection");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(Html.fromHtml("<font color='#F8B66C'>" + yes + "</font>"), (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             }
         });
@@ -108,10 +126,6 @@ public class homeFragment extends Fragment implements HomeView, HomeOnClickListe
 
     @Override
     public void showErrorMsg(String e) {
-//        Toast.makeText(getContext(), "There is no internet connection " + "\n" +"Please reconnect and try again", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "we can not reach the page as "+ e, Toast.LENGTH_SHORT).show();
-
-
 
     }
 

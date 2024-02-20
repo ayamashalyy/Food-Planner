@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.PropertyName;
+
 import java.io.Serializable;
 @Entity(tableName = "meals")
 public class Meal implements Serializable {
     @PrimaryKey
     @NonNull
     private String idMeal ;
+    @PropertyName("day")
     public int DAY;
 
     public int getDAY() {
